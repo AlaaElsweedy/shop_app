@@ -20,6 +20,7 @@ void main() async {
 
   bool isBoardingScreenShown = CacheHelper.getData(key: 'onBoarding');
   token = CacheHelper.getData(key: 'token');
+  print(token);
   Widget widget;
 
   if (isBoardingScreenShown != null) {

@@ -1,7 +1,6 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/layouts/home_layout.dart';
 import 'package:shop_app/modules/login/cubit/login_cubit.dart';
 import 'package:shop_app/modules/login/cubit/login_states.dart';
@@ -32,14 +31,9 @@ class LoginScreen extends StatelessWidget {
                 }
               });
             } else {
-              Fluttertoast.showToast(
-                msg: state.loginModel.message,
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 5,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0,
+              flutterToast(
+                message: state.loginModel.message,
+                state: ToastStates.ERROR,
               );
             }
           }

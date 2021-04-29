@@ -13,3 +13,7 @@ class AppGetHomeDataErrorState extends AppStates {}
 class AppGetCategoriesDataSuccessState extends AppStates {}
 
 class AppGetCategoriesDataErrorState extends AppStates {}
+
+class AppChangeFavoritesDataSuccessState extends AppStates {}
+
+class AppChangeFavoriteDataErrorState extends AppStates {}

@@ -89,8 +89,8 @@ class HomeScreen extends StatelessWidget {
                           crossAxisSpacing: 1,
                           childAspectRatio: 1 / 1.5,
                         ),
-                        itemBuilder: (context, index) =>
-                            buildGridProduct(model.data.products[index]),
+                        itemBuilder: (context, index) => buildGridProduct(
+                            model.data.products[index], context),
                       ),
                     ),
                   ),
@@ -107,7 +107,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-Widget buildGridProduct(ProductModel productModel) {
+Widget buildGridProduct(ProductModel productModel, context) {
   return Container(
     color: Colors.white,
     child: Padding(
@@ -173,8 +173,18 @@ Widget buildGridProduct(ProductModel productModel) {
                   Spacer(),
                   IconButton(
                     padding: EdgeInsets.zero,
-                    icon: Icon(Icons.favorite_border),
-                    onPressed: () {},
+                    icon: CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.grey,
+                      child: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      AppCubit.get(context)
+                          .changeFavoritesData(productId: productModel.id);
+                    },
                   ),
                 ],
               ),
