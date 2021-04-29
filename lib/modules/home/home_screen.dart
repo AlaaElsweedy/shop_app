@@ -174,10 +174,15 @@ Widget buildGridProduct(ProductModel productModel, context) {
                   IconButton(
                     padding: EdgeInsets.zero,
                     icon: CircleAvatar(
-                      radius: 15,
-                      backgroundColor: Colors.grey,
+                      radius: 20,
+                      backgroundColor:
+                          AppCubit.get(context).favorites[productModel.id]
+                              ? defaultColor
+                              : Colors.grey,
                       child: Icon(
-                        Icons.favorite_border,
+                        AppCubit.get(context).favorites[productModel.id]
+                            ? Icons.favorite
+                            : Icons.favorite_border,
                         color: Colors.white,
                       ),
                     ),
