@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/models/category_model.dart';
 import 'package:shop_app/models/home_model.dart';
-import 'package:shop_app/modules/search/search_screen.dart';
 import 'package:shop_app/shared/components/colors.dart';
 import 'package:shop_app/shared/components/components.dart';
 import 'package:shop_app/shared/cubit/cubit.dart';
@@ -29,86 +28,73 @@ class HomeScreen extends StatelessWidget {
         var model = AppCubit.get(context).homeModel;
         var categoryModel = AppCubit.get(context).categoryModel;
 
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('TALABAT'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  navigateTo(context, SearchScreen());
-                },
-              ),
-            ],
-          ),
-          body: ConditionalBuilder(
-            condition: model != null,
-            builder: (context) => SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildCarousalSlider(model),
-                  SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      'Categories',
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
+        return ConditionalBuilder(
+          condition: model != null,
+          builder: (context) => SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildCarousalSlider(model),
+                SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    'Categories',
+                    style: TextStyle(
+                      fontSize: 24,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    height: 100,
-                    child: ListView.separated(
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  height: 100,
+                  child: ListView.separated(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => buildCategoryItem(
+                      categoryModel.data.data[index],
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      width: 8,
+                    ),
+                    itemCount: categoryModel.data.data.length,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    'New Products',
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 22.0),
+                  child: Container(
+                    color: Colors.grey,
+                    child: GridView.builder(
+                      shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => buildCategoryItem(
-                        categoryModel.data.data[index],
+                      itemCount: model.data.products.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 1,
+                        crossAxisSpacing: 1,
+                        childAspectRatio: 1 / 1.5,
                       ),
-                      separatorBuilder: (context, index) => SizedBox(
-                        width: 8,
-                      ),
-                      itemCount: categoryModel.data.data.length,
+                      itemBuilder: (context, index) =>
+                          buildGridProduct(model.data.products[index], context),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      'New Products',
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 22.0),
-                    child: Container(
-                      color: Colors.grey,
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: model.data.products.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 1,
-                          crossAxisSpacing: 1,
-                          childAspectRatio: 1 / 1.5,
-                        ),
-                        itemBuilder: (context, index) => buildGridProduct(
-                            model.data.products[index], context),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            fallback: (context) => Center(
-              child: CircularProgressIndicator(),
-            ),
+          ),
+          fallback: (context) => Center(
+            child: CircularProgressIndicator(),
           ),
         );
       },
@@ -197,7 +183,7 @@ Widget buildGridProduct(ProductModel productModel, context) {
                     ),
                     onPressed: () {
                       AppCubit.get(context)
-                          .changeFavoritesData(productId: productModel.id);
+                          .changeFavoritesData(productModel.id);
                     },
                   ),
                 ],

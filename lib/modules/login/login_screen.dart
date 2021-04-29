@@ -7,6 +7,7 @@ import 'package:shop_app/modules/login/cubit/login_states.dart';
 import 'package:shop_app/modules/register/register_screen.dart';
 import 'package:shop_app/shared/components/colors.dart';
 import 'package:shop_app/shared/components/components.dart';
+import 'package:shop_app/shared/components/constants.dart';
 import 'package:shop_app/shared/network/local/cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -27,6 +28,8 @@ class LoginScreen extends StatelessWidget {
                 value: state.loginModel.data.token,
               ).then((value) {
                 if (value) {
+                  token = state.loginModel.data.token;
+
                   navigateAndFinish(context, HomeLayout());
                 }
               });
@@ -42,7 +45,6 @@ class LoginScreen extends StatelessWidget {
           var cubit = LoginCubit.get(context);
 
           return Scaffold(
-            appBar: AppBar(),
             body: Center(
               child: SingleChildScrollView(
                 child: Padding(
@@ -112,7 +114,7 @@ class LoginScreen extends StatelessWidget {
                                 );
                               }
                             },
-                            child: Text('login'),
+                            child: Text('login'.toUpperCase()),
                             color: defaultColor,
                           ),
                           fallback: (context) => Center(

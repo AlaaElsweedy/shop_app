@@ -1,3 +1,5 @@
+import 'package:shop_app/models/get_favorites_model.dart';
+import 'package:shop_app/models/home_model.dart';
 import 'package:shop_app/models/post_favorites_model.dart';
 
 abstract class AppStates {}
@@ -26,8 +28,22 @@ class AppChangeFavoriteDataErrorState extends AppStates {}
 
 class AppFavoriteState extends AppStates {}
 
-class AppGetFavoritesDataSuccessState extends AppStates {}
+class AppGetFavoriteDataLoadingState extends AppStates {
+  final HomeModel model;
+
+  AppGetFavoriteDataLoadingState({this.model});
+}
+
+class AppGetFavoritesDataSuccessState extends AppStates {
+  final GetFavoritesModel model;
+
+  AppGetFavoritesDataSuccessState(this.model);
+}
 
 class AppGetFavoriteDataErrorState extends AppStates {}
 
-class AppGetFavoriteDataLoadingState extends AppStates {}
+class AppGetProfileUserDataSuccessState extends AppStates {}
+
+class AppGetProfileUserDataErrorState extends AppStates {}
+
+class AppGetProfileUserDataLoadingState extends AppStates {}

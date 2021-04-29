@@ -14,24 +14,19 @@ class FavoritesScreen extends StatelessWidget {
       builder: (context, state) {
         var model = AppCubit.get(context).getFavoritesModel;
 
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('TALABAT'),
+        return ConditionalBuilder(
+          condition: model != null,
+          builder: (context) => ListView.separated(
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) => buildFavoriteItem(
+              model.data.data[index],
+              context,
+            ),
+            separatorBuilder: (context, index) => Divider(),
+            itemCount: model.data.data.length,
           ),
-          body: ConditionalBuilder(
-            condition: state is! AppGetFavoriteDataLoadingState,
-            builder: (context) => ListView.separated(
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) => buildFavoriteItem(
-                model.data.data[index],
-                context,
-              ),
-              separatorBuilder: (context, index) => Divider(),
-              itemCount: model.data.data.length,
-            ),
-            fallback: (context) => Center(
-              child: CircularProgressIndicator(),
-            ),
+          fallback: (context) => Center(
+            child: CircularProgressIndicator(),
           ),
         );
       },
@@ -111,7 +106,7 @@ Widget buildFavoriteItem(FavoritesData model, context) => Padding(
                       IconButton(
                         onPressed: () {
                           AppCubit.get(context)
-                              .changeFavoritesData(productId: model.product.id);
+                              .changeFavoritesData(model.product.id);
                         },
                         icon: CircleAvatar(
                           radius: 15.0,
