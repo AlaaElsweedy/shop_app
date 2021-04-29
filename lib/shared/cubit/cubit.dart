@@ -75,8 +75,6 @@ class AppCubit extends Cubit<AppStates> {
   void changeFavoritesData({
     @required int productId,
   }) {
-    emit(AppChangeFavoritesDataLoadingState());
-
     favorites[productId] = !favorites[productId];
     emit(AppFavoriteState());
 
@@ -95,7 +93,7 @@ class AppCubit extends Cubit<AppStates> {
         getFavoritesData();
       }
 
-      emit(AppChangeFavoritesDataSuccessState());
+      emit(AppChangeFavoritesDataSuccessState(favoritesModel));
     }).catchError((error) {
       if (!favoritesModel.status) {
         favorites[productId] = !favorites[productId];
@@ -107,13 +105,13 @@ class AppCubit extends Cubit<AppStates> {
   GetFavoritesModel getFavoritesModel;
 
   void getFavoritesData() {
+    emit(AppGetFavoriteDataLoadingState());
+
     DioHelper.getData(
       url: FAVORITES,
       token: token,
     ).then((value) {
       getFavoritesModel = GetFavoritesModel.fromJson(value.data);
-      print(value.data);
-
       emit(AppGetFavoritesDataSuccessState());
     }).catchError((error) {
       print(error.toString());

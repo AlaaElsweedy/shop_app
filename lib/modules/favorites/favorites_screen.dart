@@ -1,3 +1,4 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/models/get_favorites_model.dart';
@@ -17,14 +18,20 @@ class FavoritesScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text('TALABAT'),
           ),
-          body: ListView.separated(
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) => buildFavoriteItem(
-              model.data.data[index],
-              context,
+          body: ConditionalBuilder(
+            condition: state is! AppGetFavoriteDataLoadingState,
+            builder: (context) => ListView.separated(
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (context, index) => buildFavoriteItem(
+                model.data.data[index],
+                context,
+              ),
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: model.data.data.length,
             ),
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: model.data.data.length,
+            fallback: (context) => Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
         );
       },

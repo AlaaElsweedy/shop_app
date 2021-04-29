@@ -15,7 +15,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is AppChangeFavoritesDataSuccessState) {
+          if (!state.model.status) {
+            flutterToast(
+              message: state.model.message,
+              state: ToastStates.ERROR,
+            );
+          }
+        }
+      },
       builder: (context, state) {
         var model = AppCubit.get(context).homeModel;
         var categoryModel = AppCubit.get(context).categoryModel;
