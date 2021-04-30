@@ -27,11 +27,9 @@ class LoginScreen extends StatelessWidget {
                 key: 'token',
                 value: state.loginModel.data.token,
               ).then((value) {
-                if (value) {
-                  token = state.loginModel.data.token;
+                token = state.loginModel.data.token;
 
-                  navigateAndFinish(context, HomeLayout());
-                }
+                navigateAndFinish(context, HomeLayout());
               });
             } else {
               flutterToast(

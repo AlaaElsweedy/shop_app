@@ -47,3 +47,9 @@ class AppGetProfileUserDataSuccessState extends AppStates {}
 class AppGetProfileUserDataErrorState extends AppStates {}
 
 class AppGetProfileUserDataLoadingState extends AppStates {}
+
+class AppUpdateProfileUserDataSuccessState extends AppStates {}
+
+class AppUpdateProfileUserDataErrorState extends AppStates {}
+
+class AppUpdateProfileUserDataLoadingState extends AppStates {}

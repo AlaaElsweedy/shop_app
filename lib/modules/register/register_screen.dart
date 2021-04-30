@@ -28,11 +28,9 @@ class RegisterScreen extends StatelessWidget {
                 key: 'token',
                 value: state.registerModel.data.token,
               ).then((value) {
-                if (value) {
-                  token = state.registerModel.data.token;
+                token = state.registerModel.data.token;
 
-                  navigateAndFinish(context, LoginScreen());
-                }
+                navigateAndFinish(context, LoginScreen());
               });
             } else {
               flutterToast(

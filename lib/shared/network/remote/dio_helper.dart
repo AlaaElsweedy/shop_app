@@ -66,7 +66,7 @@ class DioHelper {
 
     return await dio.put(
       url,
-      data: dio,
+      data: data,
       queryParameters: query,
     );
   }
